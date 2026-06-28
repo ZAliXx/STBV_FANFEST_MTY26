@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: radial-gradient(circle at top, #ff4d94, #111);
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: white;
+    padding: 20px 0 30px;
+}
+
+h1 {
+    color: #ff5aa7;
+    font-size: 1.6rem;
+    text-shadow:
+        0 0 10px hotpink,
+        0 0 20px deeppink,
+        0 0 30px red;
+    margin-bottom: 10px;
+}
+
+/* PUNTAJE ARRIBA */
+
+.score {
+    width: 200px;
+    background: linear-gradient(135deg, #555, silver, #444);
+    color: black;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 0 15px silver;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#score {
+    font-size: 24px;
+    color: #ff2d6f;
+}
+
+/* CANVAS */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+canvas {
+    background: #111;
+    border: 4px solid silver;
+    border-radius: 12px;
+    box-shadow:
+        0 0 16px hotpink,
+        0 0 36px crimson,
+        inset 0 0 18px #666;
+}
+
+/* BOTONES REINICIAR Y MENÚ — juntos, debajo del canvas */
+
+.panel {
+    display: flex;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.panel button {
+    height: 46px;
+    padding: 0 22px;
+    border-radius: 12px;
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .25s;
+    color: white;
+}
+
+#restart {
+    background: linear-gradient(135deg, #ff5ca8, crimson);
+}
+
+.menuBtn {
+    background: linear-gradient(135deg, silver, #666);
+}
+
+.panel button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px hotpink;
+}
+
+/* CONTROLES TÁCTILES — 2x2 */
+
+.controls {
+    display: grid;
+    grid-template-columns: 70px 70px;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.controls button {
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+    border: none;
+    font-size: 28px;
+    background: linear-gradient(135deg, #ff6db3, crimson);
+    color: white;
+    box-shadow:
+        0 0 12px hotpink,
+        inset 0 0 8px white;
+    cursor: pointer;
+    transition: .15s;
+    padding: 0;
+}
+
+.controls button:active {
+    transform: scale(.92);
+}
