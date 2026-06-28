@@ -3,29 +3,26 @@ const ctx = canvas.getContext("2d");
 
 const ROWS = 20;
 const COLS = 10;
-const SIZE = 24;
+
+let SIZE = Math.floor(canvas.clientWidth / COLS) || 24;
 
 const scoreElement = document.getElementById("score");
-
 let score = 0;
 
 const board = [];
 for (let y = 0; y < ROWS; y++) {
-    board[y] = [];
-    for (let x = 0; x < COLS; x++) {
-        board[y][x] = 0;
-    }
+    board[y] = new Array(COLS).fill(0);
 }
 
 const colors = [
     "",
     "#ff5ca8",
-    "silver",
-    "#ff0000",
-    "#ff99cc",
-    "#888",
-    "#ffffff",
-    "#ff2d55"
+    "#b09ab8",
+    "#d65f99",
+    "#ffb3d9",
+    "#c76ca0",
+    "#f7d4ea",
+    "#e78bb7"
 ];
 
 const pieces = [
@@ -40,15 +37,25 @@ const pieces = [
 
 function randomPiece() {
     const shape = pieces[Math.floor(Math.random() * pieces.length)];
-    return { x: 3, y: 0, shape: shape };
+    return { x: 3, y: 0, shape };
 }
 
 let current = randomPiece();
 
+function resizeCanvas() {
+    const w = canvas.clientWidth;
+    SIZE = Math.floor(w / COLS);
+    canvas.width  = SIZE * COLS;
+    canvas.height = SIZE * ROWS;
+    drawBoard();
+}
+
+window.addEventListener("resize", resizeCanvas);
+
 function drawSquare(x, y, color) {
     ctx.fillStyle = color;
     ctx.fillRect(x * SIZE, y * SIZE, SIZE, SIZE);
-    ctx.strokeStyle = "#111";
+    ctx.strokeStyle = "rgba(0,0,0,0.25)";
     ctx.strokeRect(x * SIZE, y * SIZE, SIZE, SIZE);
 }
 
@@ -57,7 +64,7 @@ function drawBoard() {
     for (let y = 0; y < ROWS; y++) {
         for (let x = 0; x < COLS; x++) {
             const value = board[y][x];
-            drawSquare(x, y, value ? colors[value] : "#202020");
+            drawSquare(x, y, value ? colors[value] : "#1a1a1a");
         }
     }
     current.shape.forEach((row, y) => {
@@ -71,14 +78,10 @@ function collide() {
     for (let y = 0; y < current.shape.length; y++) {
         for (let x = 0; x < current.shape[y].length; x++) {
             if (current.shape[y][x]) {
-                const newX = current.x + x;
-                const newY = current.y + y;
-                if (
-                    newX < 0 ||
-                    newX >= COLS ||
-                    newY >= ROWS ||
-                    (board[newY] && board[newY][newX])
-                ) return true;
+                const nx = current.x + x;
+                const ny = current.y + y;
+                if (nx < 0 || nx >= COLS || ny >= ROWS || (board[ny] && board[ny][nx]))
+                    return true;
             }
         }
     }
@@ -130,19 +133,17 @@ function rotatePiece() {
             rotated[x][rows - 1 - y] = current.shape[y][x];
         }
     }
-    const prevShape = current.shape;
+    const prev = current.shape;
     current.shape = rotated;
-    if (collide()) current.shape = prevShape;
+    if (collide()) current.shape = prev;
     drawBoard();
 }
 
-
 document.addEventListener("keydown", e => {
-    if (e.key === "ArrowLeft")  { current.x--; if (collide()) current.x++; }
-    if (e.key === "ArrowRight") { current.x++; if (collide()) current.x--; }
-    if (e.key === "ArrowDown")  { drop(); return; }
-    if (e.key === "ArrowUp")    { rotatePiece(); return; }
-    drawBoard();
+    if (e.key === "ArrowLeft")  { current.x--; if (collide()) current.x++; drawBoard(); }
+    if (e.key === "ArrowRight") { current.x++; if (collide()) current.x--; drawBoard(); }
+    if (e.key === "ArrowDown")  { drop(); }
+    if (e.key === "ArrowUp")    { rotatePiece(); }
 });
 
 document.getElementById("left").onclick   = () => { current.x--; if (collide()) current.x++; drawBoard(); };
@@ -153,5 +154,7 @@ document.getElementById("rotate").onclick = () => rotatePiece();
 document.getElementById("restart").onclick = () => location.reload();
 document.getElementById("menu").onclick    = () => window.location.href = "../index.html";
 
-setInterval(drop, 600);
-drawBoard();
+window.addEventListener("load", () => {
+    resizeCanvas();
+    setInterval(drop, 600);
+});
