@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Memorama</title>
+
+    <link rel="stylesheet" href="../assets/css/memo.css">
+
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <h1>Memorama</h1>
+
+    <div class="info">
+
+        <div>
+
+            <h3>Movimientos</h3>
+
+            <span id="movimientos">0</span>
+
+        </div>
+
+        <div>
+
+            <h3>Tiempo</h3>
+
+            <span id="tiempo">00:00</span>
+
+        </div>
+
+    </div>
+
+    <div id="tablero" class="tablero"></div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div id="modalVictoria" class="modal oculto">
+
+    <div class="ventana">
+
+        <h2>¡Felicidades!</h2>
+
+        <p>
+            Terminaste el memorama.
+        </p>
+
+        <h3>
+
+            Movimientos:
+            <span id="movFinal"></span>
+
+        </h3>
+
+        <h3>
+
+            Tiempo:
+            <span id="tiempoFinal"></span>
+
+        </h3>
+
+        <div class="botones">
+
+            <button id="nuevaPartida">
+
+                Jugar otra vez
+
+            </button>
+
+            <button onclick="location.href='../index.html'">
+
+                Menú Principal
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="../assets/js/memo.js"></script>
+
+</body>
+
+</html>
