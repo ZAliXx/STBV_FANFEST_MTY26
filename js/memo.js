@@ -25,7 +25,7 @@ const TODAS_LAS_IMAGENES = [
     "../assets/img/memo/d.png",
     "../assets/img/memo/e.png",
     "../assets/img/memo/f.png",
-    "../assets/img/memo/g",
+    "../assets/img/memo/g.png",
     "../assets/img/memo/h.png",
     "../assets/img/memo/i.png"
 ];
