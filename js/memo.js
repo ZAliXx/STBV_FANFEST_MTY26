@@ -18,7 +18,16 @@ const TODAS_LAS_IMAGENES = [
     "../assets/img/memo/yum.png",
     "../assets/img/memo/all.png",
     "../assets/img/memo/sweet.png",
-    "../assets/img/memo/stbv.png"
+    "../assets/img/memo/stbv.png",
+    "../assets/img/memo/a.png",
+    "../assets/img/memo/b.png",
+    "../assets/img/memo/c.png",
+    "../assets/img/memo/d.png",
+    "../assets/img/memo/e.png",
+    "../assets/img/memo/f.png",
+    "../assets/img/memo/g",
+    "../assets/img/memo/h.png",
+    "../assets/img/memo/i.png"
 ];
 
 let primeraCarta  = null;
