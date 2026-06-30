@@ -6,8 +6,12 @@ const COLS = 10;
 
 let SIZE = Math.floor(canvas.clientWidth / COLS) || 24;
 
-const scoreElement = document.getElementById("score");
+const scoreElement   = document.getElementById("score");
+const modal          = document.getElementById("modalGameOver");
+const puntajeFinal   = document.getElementById("puntajeFinal");
+
 let score = 0;
+let jugando = true;
 
 const board = [];
 for (let y = 0; y < ROWS; y++) {
@@ -108,7 +112,14 @@ function clearLines() {
     }
 }
 
+function gameOver() {
+    jugando = false;
+    puntajeFinal.textContent = score;
+    modal.classList.remove("oculto");
+}
+
 function drop() {
+    if (!jugando) return;
     current.y++;
     if (collide()) {
         current.y--;
@@ -116,14 +127,15 @@ function drop() {
         clearLines();
         current = randomPiece();
         if (collide()) {
-            alert("GAME OVER");
-            location.reload();
+            gameOver();
+            return;
         }
     }
     drawBoard();
 }
 
 function rotatePiece() {
+    if (!jugando) return;
     const rows = current.shape.length;
     const cols = current.shape[0].length;
     const rotated = [];
@@ -140,19 +152,21 @@ function rotatePiece() {
 }
 
 document.addEventListener("keydown", e => {
+    if (!jugando) return;
     if (e.key === "ArrowLeft")  { current.x--; if (collide()) current.x++; drawBoard(); }
     if (e.key === "ArrowRight") { current.x++; if (collide()) current.x--; drawBoard(); }
     if (e.key === "ArrowDown")  { drop(); }
     if (e.key === "ArrowUp")    { rotatePiece(); }
 });
 
-document.getElementById("left").onclick   = () => { current.x--; if (collide()) current.x++; drawBoard(); };
-document.getElementById("right").onclick  = () => { current.x++; if (collide()) current.x--; drawBoard(); };
+document.getElementById("left").onclick   = () => { if (!jugando) return; current.x--; if (collide()) current.x++; drawBoard(); };
+document.getElementById("right").onclick  = () => { if (!jugando) return; current.x++; if (collide()) current.x--; drawBoard(); };
 document.getElementById("down").onclick   = () => drop();
 document.getElementById("rotate").onclick = () => rotatePiece();
 
-document.getElementById("restart").onclick = () => location.reload();
-document.getElementById("menu").onclick    = () => window.location.href = "../index.html";
+document.getElementById("restart").onclick  = () => location.reload();
+document.getElementById("menu").onclick     = () => window.location.href = "../index.html";
+document.getElementById("btnReiniciar").onclick = () => location.reload();
 
 window.addEventListener("load", () => {
     resizeCanvas();
